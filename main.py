@@ -1,7 +1,8 @@
+from baidusearch import search  # Import baidusearch library
 from pkg.plugin.models import *
 from pkg.plugin.host import EventContext, PluginHost
 from pkg.plugin.context import register, handler, llm_func, BasePlugin, APIHost, EventContext
-from pkg.plugin.events import *
+from pkg.plugin.events import *  # 导入事件类
 from datetime import datetime, timedelta
 import dateparser
 from typing import List, Tuple
@@ -13,7 +14,13 @@ import yaml
 import time
 import asyncio
 import pkg.platform.types as platform_types
+from . import mux, webpilot
 import json
+backend_mapping = {
+    "webpilot": webpilot.process,
+    "native": mux.process,
+}
+
 
 process: callable = None
 config: dict = None
@@ -52,8 +59,6 @@ class AsyncTask(Plugin):
             "target_id": str(query.launcher_id), 
             "target_type": str(query.launcher_type).split(".")[-1].lower(),  # 获取枚举值的小写形式
             }
-            print(target_info["target_id"])
-            print(target_info["target_type"])
             self.target_id = target_info["target_id"]
             self.target_type = target_info["target_type"]
             asyncio.create_task(self.runTask(messages, end_time, interval_minutes))
@@ -64,7 +69,6 @@ class AsyncTask(Plugin):
 
     async def runTask(self, messages: str, end_time: str, interval_minutes: int):
         start_time = datetime.now()
-        print(f"Start time: {start_time}")
         
         end_time_parsed = dateparser.parse(end_time)
         if end_time_parsed is None:
@@ -76,7 +80,6 @@ class AsyncTask(Plugin):
         # 启动后台任务
         await self.replytask(messages, end_time, interval_minutes, current_time, result_messages)
 
-        print(f"Task finished with messages: {result_messages}") 
 
     async def replytask(self, messages: str, end_time: str, interval_minutes: int, current_time: datetime, result_messages: list):
         # 每次检查时间，确保不超出end_time
@@ -100,7 +103,6 @@ class AsyncTask(Plugin):
                         platform_types.Plain("@" + str(self.target_id) + " " + messages)
                     ])
                 )
-        print(f"Finished task with messages: {messages}")
 
 
     # Triggered when plugin is uninstalled
