@@ -1,4 +1,3 @@
-from baidusearch import search  # Import baidusearch library
 from pkg.plugin.models import *
 from pkg.plugin.host import EventContext, PluginHost
 from pkg.plugin.context import register, handler, llm_func, BasePlugin, APIHost, EventContext
@@ -14,12 +13,7 @@ import yaml
 import time
 import asyncio
 import pkg.platform.types as platform_types
-from . import mux, webpilot
 import json
-backend_mapping = {
-    "webpilot": webpilot.process,
-    "native": mux.process,
-}
 
 
 process: callable = None
