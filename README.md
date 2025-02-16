@@ -17,4 +17,5 @@
 
 ## 使用
 
-可以直接发送链接给机器人让它访问并总结内容。
+![image](https://github.com/user-attachments/assets/45f6f292-5dc3-42f2-97d9-5593b6d84ff7)
+![image](https://github.com/user-attachments/assets/a09e154d-b418-498b-9d20-d2441d9b7070)
