@@ -1,7 +1,7 @@
 # AsyncTaskPlugin
 
 
-[QChatGPT 项目](https://github.com/RockChinQ/QChatGPT)的定时任务插件，基于GPT的Function Calling功能实现定时任务创建，可以让你的机器人在指定时间提醒你重要事项。
+[QChatGPT 项目](https://github.com/RockChinQ/QChatGPT)的定时任务插件，基于GPT的Function Calling功能实现定时任务创建，可以让你的机器人在指定时间提醒你重要事项，支持群组、私聊。
 
 > 请先阅读[此Wiki](https://github.com/RockChinQ/QChatGPT/wiki/%E6%8F%92%E4%BB%B6%E4%BD%BF%E7%94%A8-%E5%86%85%E5%AE%B9%E5%87%BD%E6%95%B0)
 
