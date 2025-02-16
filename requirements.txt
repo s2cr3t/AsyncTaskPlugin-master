@@ -1,4 +1,2 @@
 dateparser
 pyyaml
-mux
-webpilot
