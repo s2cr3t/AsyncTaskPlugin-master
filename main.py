@@ -1,4 +1,4 @@
-from baidusearch import search  # Import baidusearch library
+
 from pkg.plugin.models import *
 from pkg.plugin.host import EventContext, PluginHost
 from pkg.plugin.context import register, handler, llm_func, BasePlugin, APIHost, EventContext
