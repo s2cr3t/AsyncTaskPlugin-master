@@ -48,9 +48,7 @@ class AsyncTask(Plugin):
         """
         try:
             
-            with open('query_log.txt', 'a') as file:
-                file.write(str(query) + '\n')
-
+            
             target_info = {
             "target_id": str(query.launcher_id),
             "sender_id": str(query.sender_id), 
