@@ -25,7 +25,7 @@ aiocqhttp_adapter = None
 # Register plugin
 # 异步初始化
 
-@register(name="Async_Task_runner", description="基于GPT的函数调用能力，为QChatGPT提供定时任务功能", version="0.1.0", author="s2cr3t")
+@register(name="Async_Task_runner", description="基于GPT的函数调用能力，为QChatGPT提供定时任务功能", version="0.1.1", author="s2cr3t")
 class AsyncTask(Plugin):
     async def initialize(self):
         pass
