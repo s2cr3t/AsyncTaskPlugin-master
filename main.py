@@ -1,3 +1,4 @@
+from baidusearch import search  # Import baidusearch library
 from pkg.plugin.models import *
 from pkg.plugin.host import EventContext, PluginHost
 from pkg.plugin.context import register, handler, llm_func, BasePlugin, APIHost, EventContext
@@ -20,6 +21,7 @@ process: callable = None
 config: dict = None
 selfs = None
 ctxs: EventContext = None;
+aiocqhttp_adapter = None
 # Register plugin
 # 异步初始化
 
@@ -45,16 +47,18 @@ class AsyncTask(Plugin):
             list of tuples: Each tuple contains a timestamp (in string format "YYYY-MM-DD HH:MM:SS") and the corresponding message. If the input range is valid and the intervals are calculated correctly, the list will include all the messages with their respective timestamps within the time range.
         """
         try:
-            # 将 query 存入一个 JSON 文件
-            with open('query_data.txt', 'w') as f:
-                f.write(str(query))
+            
+            with open('query_log.txt', 'a') as file:
+                file.write(str(query) + '\n')
 
             target_info = {
-            "target_id": str(query.launcher_id), 
+            "target_id": str(query.launcher_id),
+            "sender_id": str(query.sender_id), 
             "target_type": str(query.launcher_type).split(".")[-1].lower(),  # 获取枚举值的小写形式
             }
             self.target_id = target_info["target_id"]
             self.target_type = target_info["target_type"]
+            self.sender_id = target_info["sender_id"]
             asyncio.create_task(self.runTask(messages, end_time, interval_minutes))
             return "定时任务设置完成"  # Immediate response
         except Exception as e:
@@ -70,7 +74,7 @@ class AsyncTask(Plugin):
         end_time = end_time_parsed
         current_time = start_time
         result_messages = []  
-
+        
         # 启动后台任务
         await self.replytask(messages, end_time, interval_minutes, current_time, result_messages)
 
@@ -93,13 +97,12 @@ class AsyncTask(Plugin):
                     adapter=self.host.get_platform_adapters()[0],
                     target_type=self.target_type,
                     target_id=self.target_id,
-                    message=platform_types.MessageChain([
-                        platform_types.Plain("@" + str(self.target_id) + " " + messages)
+                    message=platform_types.MessageChain([platform_types.At(self.sender_id),
+                        platform_types.Plain(messages)
                     ])
                 )
 
 
-    # Triggered when plugin is uninstalled
     def __del__(self):
         pass
 
